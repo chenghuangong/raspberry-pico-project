@@ -1,7 +1,8 @@
 #include "oled_disp.h"
 
-oled_disp::oled_disp(uint8_t sda, uint8_t scl)
-    : sda_(sda)
+oled_disp::oled_disp(i2c_inst_t* i2c_instance, uint8_t sda, uint8_t scl)
+    : i2c_instance_(i2c_instance)
+    , sda_(sda)
     , scl_(scl)
 {
 
@@ -20,11 +21,7 @@ void oled_disp::init_dev()
 
 void oled_disp::init_oled_i2c()
 {
-    i2c_init(i2c_default, 400 * 1000);
-    gpio_set_function(sda_, GPIO_FUNC_I2C);
-    gpio_set_function(scl_, GPIO_FUNC_I2C);
-    gpio_pull_up(sda_);
-    gpio_pull_up(scl_);
+
 }   
 
 void oled_disp::init_oled_driver()
@@ -74,7 +71,7 @@ void oled_disp::oled_send_cmd(uint8_t cmd)
     // ssd1306 command control byte is 0x80
     // Co = 1, D/C = 0 => the driver expects a command
     uint8_t buf[2] = {0x80, cmd};
-    i2c_write_blocking(i2c_default, ADDR, buf, 2, false);
+    i2c_write_blocking(i2c_instance_, ADDR, buf, 2, false);
 }
 
 void oled_disp::oled_send_to_memory(uint8_t* buf, size_t buf_len)
@@ -85,7 +82,7 @@ void oled_disp::oled_send_to_memory(uint8_t* buf, size_t buf_len)
     {
         return;
     }
-    i2c_write_blocking(i2c_default, ADDR, buf, buf_len, false);
+    i2c_write_blocking(i2c_instance_, ADDR, buf, buf_len, false);
 }
 
 void oled_disp::show_test_image()

@@ -1,1 +1,2 @@
 add_subdirectory(dht11_display)
+add_subdirectory(ov7670)

@@ -54,7 +54,7 @@ character size 8 * 16 pixels, total characters 16 * 4 = 64, 16 characters per li
 class oled_disp
 {
 public:
-    oled_disp(uint8_t sda = PICO_DEFAULT_I2C_SDA_PIN, uint8_t scl = PICO_DEFAULT_I2C_SCL_PIN);
+    oled_disp(i2c_inst_t* i2c_instance, uint8_t sda = PICO_DEFAULT_I2C_SDA_PIN, uint8_t scl = PICO_DEFAULT_I2C_SCL_PIN);
     ~oled_disp();
 
 public:
@@ -114,6 +114,7 @@ private:
 private:
     uint8_t sda_;
     uint8_t scl_;
+    i2c_inst_t* i2c_instance_;
 };
 
 
