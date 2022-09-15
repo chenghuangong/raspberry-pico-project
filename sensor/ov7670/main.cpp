@@ -21,6 +21,9 @@ ov7076: D6 -> pico GPIO15
 ov7076: D7 -> pico GPIO16
 ov7076: PWDN -> pico GND
 ov7076: RST -> pico 3.3V, high = normal, low = reset
+
+[notice]
+be careful about wiring
 */
 
 #include <stdio.h>
@@ -104,6 +107,8 @@ int main()
     // config sensor
     ov7670_init();
     
+
+    // using timer will can not get correct image
     // repeating_timer timer;
     // add_repeating_timer_ms(2000, capture_frame_callback, nullptr, &timer);
 
